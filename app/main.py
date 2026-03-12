@@ -153,3 +153,4 @@ async def clear_day(event_id: int, db: Session = Depends(database.get_db)):
     
     db.commit()
     return RedirectResponse(url=f"/event/{event_id}", status_code=303)
+    
