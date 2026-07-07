@@ -3,11 +3,13 @@
 env/
 venv/
 ENV/
+venv-linux/
 
-# Python cache
+# Python cache and testing
 __pycache__/
 *.py[cod]
 *$py.class
+.pytest_cache/
 
 # Distribution / packaging
 dist/
@@ -25,3 +27,8 @@ Thumbs.db
 # IDEs
 .vscode/
 .idea/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3

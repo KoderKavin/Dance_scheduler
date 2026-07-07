@@ -67,6 +67,33 @@
                     </button>
                 </form>
             </div>
+            <div class="bg-indigo-50 p-4 rounded-2xl border-2 border-indigo-200">
+                <h3 class="text-indigo-800 font-bold text-sm mb-3">🚀 Smart Planner (Custom Time Window)</h3>
+                <form action="/event/{{ event.id }}/auto_generate" method="post">
+                    <div class="grid grid-cols-2 gap-2 mb-3">
+                        <div>
+                            <label class="text-[10px] font-bold text-indigo-400 uppercase">Start Time</label>
+                            <input type="text" name="start_time" placeholder="18:00" value="{{ event.start_time or '18:00' }}" class="w-full p-2 border rounded-xl text-sm font-mono" required>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-indigo-400 uppercase">End Time</label>
+                            <input type="text" name="end_time" placeholder="02:00" value="{{ event.end_time or '02:00' }}" class="w-full p-2 border rounded-xl text-sm font-mono" required>
+                        </div>
+                    </div>
+                    <p class="text-[10px] font-bold text-indigo-400 uppercase mb-2">Select Today's Priority Dances:</p>
+                    <div class="grid grid-cols-1 gap-1 mb-4 max-h-40 overflow-y-auto p-2 bg-white rounded-xl border">
+                        {% for d in dances %}
+                        <label class="flex items-center space-x-2 text-sm p-1 hover:bg-indigo-50 rounded">
+                            <input type="checkbox" name="priority_ids" value="{{ d.id }}" class="rounded text-indigo-600">
+                            <span>{{ d.name }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-600 text-white p-3 rounded-xl font-bold text-xs uppercase shadow-lg hover:bg-indigo-700">
+                        Generate Optimized Plan
+                    </button>
+                </form>
+            </div>
             <div class="bg-amber-50 p-4 rounded-2xl border-2 border-amber-200 mb-6">
                 <h3 class="text-amber-800 font-bold text-sm mb-3">⚠️ Today's Individual Constraints</h3>
                 <form action="/event/{{ event.id }}/add_daily_constraint" method="post" class="space-y-2">

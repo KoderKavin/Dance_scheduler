@@ -7,6 +7,8 @@ class Event(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True)
     date = Column(String)
+    start_time = Column(String, default="18:00")
+    end_time = Column(String, default="02:00")
     dances = relationship("Dance", back_populates="event")
     dancers = relationship("Dancer", back_populates="event")
 
@@ -18,6 +20,7 @@ class Dancer(Base):
     event_id = Column(Integer, ForeignKey("events.id"))
     event = relationship("Event", back_populates="dancers")
 
+
 class Dance(Base):
     __tablename__ = "dances"
     id = Column(Integer, primary_key=True, index=True)
@@ -27,6 +30,7 @@ class Dance(Base):
     event = relationship("Event", back_populates="dances")
     sessions = relationship("Session", back_populates="dance", cascade="all, delete-orphan")
 
+
 class Session(Base):
     __tablename__ = "sessions"
     id = Column(Integer, primary_key=True, index=True)
@@ -34,11 +38,11 @@ class Session(Base):
     duration = Column(Integer)
     is_runthrough = Column(Boolean, default=False)
     event_id = Column(Integer, ForeignKey("events.id"))
-    # NEW COLUMNS FOR DRAG & DROP AND CUSTOM TIMES
     sort_order = Column(Integer, default=0)
     custom_time = Column(String, nullable=True)
     
     dance = relationship("Dance",back_populates="sessions")
+
 
 class DailyConstraint(Base):
     __tablename__ = "daily_constraints"
