@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from fastapi import FastAPI, Depends, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from sqlalchemy import text
+from sqlalchemy import text, inspect
 from sqlalchemy.orm import Session
 from typing import List
 from .db import models, database, schemas
@@ -13,14 +13,17 @@ from .services import engine
 models.Base.metadata.create_all(bind=database.engine)
 
 try:
-    with database.engine.begin() as conn:
-        columns = [row[1] for row in conn.execute(text("PRAGMA table_info(events)")).fetchall()]
-        if "start_time" not in columns:
-            conn.execute(text("ALTER TABLE events ADD COLUMN start_time VARCHAR DEFAULT '18:00'"))
-        if "end_time" not in columns:
-            conn.execute(text("ALTER TABLE events ADD COLUMN end_time VARCHAR DEFAULT '02:00'"))
+    inspector = inspect(database.engine)
+    if "events" in inspector.get_table_names():
+        columns = [col["name"] for col in inspector.get_columns("events")]
+        with database.engine.begin() as conn:
+            if "start_time" not in columns:
+                conn.execute(text("ALTER TABLE events ADD COLUMN start_time VARCHAR DEFAULT '18:00'"))
+            if "end_time" not in columns:
+                conn.execute(text("ALTER TABLE events ADD COLUMN end_time VARCHAR DEFAULT '02:00'"))
 except Exception as e:
     print(f"Migration error: {e}")
+
 
 app = FastAPI()
 templates = Jinja2Templates(directory="app/templates")
