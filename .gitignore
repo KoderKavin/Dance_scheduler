@@ -32,7 +32,3 @@ Thumbs.db
 *.db
 *.sqlite
 *.sqlite3
-
-# Docker
-Dockerfile
-.dockerignore
