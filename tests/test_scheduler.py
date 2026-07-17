@@ -1,5 +1,5 @@
 from datetime import datetime
-from app.engine import check_overlap, calculate_full_schedule
+from app.services.engine import check_overlap, calculate_full_schedule
 
 # Mock objects
 class MockDance:

@@ -7,7 +7,8 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 from typing import List
-from . import models, database, engine, schemas
+from .db import models, database, schemas
+from .services import engine
 
 models.Base.metadata.create_all(bind=database.engine)
 
