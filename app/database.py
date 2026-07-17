@@ -3,8 +3,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# This ensures the file is created in your project folder on your Lenovo
-DB_PATH = os.path.join(os.getcwd(), "scheduler.db")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DB_PATH = os.path.join(BASE_DIR, "data", "scheduler.db")
 
 SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
 

@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: dance-scheduler
+    env: docker
+    dockerContext: .
+    dockerfilePath: ./app/Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: "8000"
